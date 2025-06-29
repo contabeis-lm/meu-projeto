@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Rescisão</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    label, input { display: block; margin-bottom: 10px; }
+    button { margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Rescisão de Contrato</h1>
+  
+  <label>Salário mensal (R$): <input type="number" id="salario" /></label>
+  <label>Meses trabalhados: <input type="number" id="meses" /></label>
+  <label>Férias vencidas? <input type="checkbox" id="ferias" /></label>
+  
+  <button onclick="calcular()">Calcular</button>
+
+  <h2>Resultado:</h2>
+  <div id="resultado"></div>
+
+  <script>
+    function calcular() {
+      const salario = parseFloat(document.getElementById("salario").value);
+      const meses = parseInt(document.getElementById("meses").value);
+      const ferias = document.getElementById("ferias").checked;
+
+      if (isNaN(salario) || isNaN(meses)) {
+        alert("Preencha os campos corretamente.");
+        return;
+      }
+
+      let avisoPrevio = salario;
+      let decimoTerceiro = (salario / 12) * meses;
+      let feriasVencidas = ferias ? salario + (salario * 1/3) : 0;
+      let total = avisoPrevio + decimoTerceiro + feriasVencidas;
+
+      document.getElementById("resultado").innerHTML = `
+        <p><strong>Aviso prévio:</strong> R$ ${avisoPrevio.toFixed(2)}</p>
+        <p><strong>13º proporcional:</strong> R$ ${decimoTerceiro.toFixed(2)}</p>
+        <p><strong>Férias vencidas + 1/3:</strong> R$ ${feriasVencidas.toFixed(2)}</p>
+        <p><strong>Total:</strong> R$ ${total.toFixed(2)}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
